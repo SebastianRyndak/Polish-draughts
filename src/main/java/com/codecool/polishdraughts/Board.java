@@ -17,8 +17,37 @@ public class Board {
 
     @Override
     public String toString() {
-        // wyświetlanie tablicy
-        return "Dupa{}";
+        printFirstLine(board.length);
+        for (int i = 0; i < board.length; i++){
+            System.out.print((char)(65 + i) + "  ");
+            for (int j = 0; j < board[i].length; j++){
+                if (board[i][j] == null){
+                    System.out.print( ".  ");
+                }
+                else if (board[i][j].getColor().getColorValue().equals(WHITE_BRIGHT) ){
+                    System.out.print( "X  ");
+                }
+                else {
+                    System.out.print( "O  ");
+                }
+
+            }
+            System.out.println();
+        }
+        return "";
+    }
+
+    public void printFirstLine(int len){
+        System.out.print("   ");
+        for (int i = 0; i < len; i++){
+            if (i < 9){
+                System.out.print(i  + 1 + "  ");
+            }
+            else {
+                System.out.print(i  + 1 + " ");
+            }
+        }
+        System.out.println();
     }
 
     public void removePawn(int x, int y){
@@ -38,8 +67,17 @@ public class Board {
     }
 
     private void placePawns(){
-        createPawn(WHITE_BRIGHT, 0, 0);
-        // ustawianie 2 x size pionków
+        short pawnCount = 0;
+        for(int y=0; y < size; y++){
+            for (int x=0; x< 4; x++){
+                if ((x+y)%2 ==0 ){
+                    board[x][y] = createPawn(WHITE_BRIGHT, x, y);
+                    board[size-x-1][size-y-1] = createPawn(GREEN_BRIGHT, size-x-1, size-y-1);
+                    pawnCount +=1;
+                }
+
+            }
+        }
     }
 
     private Pawn createPawn(String colorValue, int x, int y){
