@@ -4,6 +4,8 @@ package com.codecool.polishdraughts;
 public class Board {
     private static final String WHITE_BRIGHT = "\033[0;97m";  // WHITE
     private static final String GREEN_BRIGHT = "\033[0;92m";  // GREEN
+    public static final String RESET = "\033[0m";  // Text Reset
+    Color color ;
 
     private Pawn[][] board;
     private int size;
@@ -18,18 +20,20 @@ public class Board {
     public String toString() {
         printFirstLine(board.length);
         for (int i = 0; i < board.length; i++){
-            System.out.print((char)(65 + i) + "  ");
+            System.out.print((char)(65 + i) + " ");
             for (int j = 0; j < board[i].length; j++){
-                if (board[i][j] == null){
-                    System.out.print( ".  ");
+                if (board[i][j] == null && (i+j)%2!=0 ){
+                    System.out.print(Color.WHITE_BACKGROUND_BRIGHT+"   "+RESET);
+                }
+                else if (board[i][j] == null){
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND+"   "+RESET);
                 }
                 else if (board[i][j].getColor().getColorValue().equals(WHITE_BRIGHT) ){
-                    System.out.print( "X  ");
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND+Color.ANSI_PURPLE+" ● "+RESET);
                 }
                 else {
-                    System.out.print( "O  ");
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND+" ● "+RESET);
                 }
-
             }
             System.out.println();
         }
@@ -37,7 +41,7 @@ public class Board {
     }
 
     public void printFirstLine(int len){
-        System.out.print("   ");
+        System.out.print("  ");
         for (int i = 0; i < len; i++){
             if (i < 9){
                 System.out.print(i  + 1 + "  ");
@@ -85,9 +89,11 @@ public class Board {
         }
     }
 
+
     private Pawn createPawn(String colorValue, int x, int y){
         Color color = new Color(colorValue);
         Coordinates coordinates = new Coordinates(x, y);
         return new Pawn(color, coordinates);
     }
+
 }

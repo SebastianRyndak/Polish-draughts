@@ -91,19 +91,15 @@ public class Game {
         int x = coordinates[0];
         int y = coordinates[1];
         if(x-1 >= 0 && y-1 >= 0 && this.board.getBoard()[x-1][y-1] == null){
-            System.out.println("pierwsza walidacja");
             return true;
         }
         else if(x-1 >= 0 && y+1 <= this.board.getSize()-1 && this.board.getBoard()[x-1][y+1] == null){
-            System.out.println("druga walidacja");
             return true;
         }
         else if(x+1 <= this.board.getSize()-1 && y+1 <= this.board.getSize()-1 && this.board.getBoard()[x+1][y+1] == null){
-            System.out.println("Trzecia walidacja");
             return true;
         }
         else if(x+1 <= this.board.getSize()-1 && y-1 >= 0 && this.board.getBoard()[x+1][y-1] == null){
-            System.out.println("Czwarta walidacja");
             return true;
         }
         return false;
