@@ -1,6 +1,5 @@
 package com.codecool.polishdraughts;
 
-import javax.swing.*;
 
 public class Board {
     private static final String WHITE_BRIGHT = "\033[0;97m";  // WHITE
@@ -56,6 +55,10 @@ public class Board {
 
     public Pawn getPawn(int x, int y){
         return board[x][y];
+    }
+
+    public Pawn[][] getBoard() {
+        return board;
     }
 
     public int getSize(){

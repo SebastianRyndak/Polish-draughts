@@ -31,7 +31,7 @@ public class Game {
 
     public int[] startMove() {
         while (true){
-            System.out.println("Enter coordinates: ");
+            System.out.println("Enter coordinates chosen pawn: ");
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
             if (line.equals("quit")){
@@ -43,7 +43,7 @@ public class Game {
             int[] coordinates = new int[2];
             coordinates[1] = Integer.parseInt(line.substring(1)) - 1;
             coordinates[0] = changeMark(line.charAt(0));
-            if(isCoordinatesInBoard(coordinates) && isFilledPosition(coordinates)){
+            if((isCoordinatesInBoard(coordinates) && isFilledPosition(coordinates)) && emptyMove(coordinates)){
                 return coordinates;
             }
         }
@@ -85,5 +85,27 @@ public class Game {
             }
         }
         return !Character.isDigit(coordinates.charAt(0));
+    }
+
+    public boolean emptyMove(int[] coordinates){
+        int x = coordinates[0];
+        int y = coordinates[1];
+        if(x-1 >= 0 && y-1 >= 0 && this.board.getBoard()[x-1][y-1] == null){
+            System.out.println("pierwsza walidacja");
+            return true;
+        }
+        else if(x-1 >= 0 && y+1 <= this.board.getSize()-1 && this.board.getBoard()[x-1][y+1] == null){
+            System.out.println("druga walidacja");
+            return true;
+        }
+        else if(x+1 <= this.board.getSize()-1 && y+1 <= this.board.getSize()-1 && this.board.getBoard()[x+1][y+1] == null){
+            System.out.println("Trzecia walidacja");
+            return true;
+        }
+        else if(x+1 <= this.board.getSize()-1 && y-1 >= 0 && this.board.getBoard()[x+1][y-1] == null){
+            System.out.println("Czwarta walidacja");
+            return true;
+        }
+        return false;
     }
 }
