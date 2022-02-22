@@ -7,6 +7,8 @@ public class Main {
         Board board = getBoardSize();
         Game game = new Game(board);
         System.out.println(board);
+        game.movePawn();
+        System.out.println(board);
     }
 
     public static Board getBoardSize() {

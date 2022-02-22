@@ -66,8 +66,9 @@ public class Board {
         // walidacja czy można przesunąć pionek na dane miejsce
     }
 
-    public void movePawn(Pawn pawn, int x, int y){
-
+    public void movePawn(Pawn pawn, int[] currentCoordinates, int[] nextCoordinates){
+        board[currentCoordinates[0]][currentCoordinates[1]] = null;
+        board[nextCoordinates[0]][nextCoordinates[1]] = pawn;
     }
 
     private void placePawns(){
