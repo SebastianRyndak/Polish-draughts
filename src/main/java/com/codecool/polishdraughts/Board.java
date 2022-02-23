@@ -118,4 +118,12 @@ public class Board {
         return new Pawn(color, coordinates);
     }
 
+    public String getEnemyColor(String color) {
+        if (color == WHITE_BRIGHT){
+            return GREEN_BRIGHT;
+        } else {
+            return WHITE_BRIGHT;
+        }
+    }
 }
+
