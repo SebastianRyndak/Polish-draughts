@@ -12,7 +12,7 @@ public class Main {
         Game game = new Game(board);
         System.out.println(board);
         while(true) {
-            game.movePawn();
+            game.move();
             System.out.println(board);
         }
     }

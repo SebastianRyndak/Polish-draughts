@@ -36,10 +36,10 @@ public class Board {
                     System.out.print(Color.ANSI_BLACK_BACKGROUND+"   "+RESET);
                 }
                 else if (board[i][j].getColor().getColorValue().equals(WHITE_BRIGHT) && board[i][j].isCrowned()){
-                    System.out.print(Color.ANSI_BLACK_BACKGROUND+Color.ANSI_PURPLE+" X "+RESET);
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND+Color.ANSI_PURPLE+" ◕ "+RESET);
                 }
                 else if (board[i][j].getColor().getColorValue().equals(GREEN_BRIGHT) && board[i][j].isCrowned()){
-                    System.out.print(Color.ANSI_BLACK_BACKGROUND+" X "+RESET);
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND+" ◕ "+RESET);
                 }
                 else if (board[i][j].getColor().getColorValue().equals(WHITE_BRIGHT) ){
                     System.out.print(Color.ANSI_BLACK_BACKGROUND+Color.ANSI_PURPLE+" ● "+RESET);
@@ -77,7 +77,7 @@ public class Board {
     }
 
     public void removePawn(int x, int y){
-        if (board[x][y].getColor().getColorValue() == GREEN_BRIGHT) {
+        if (board[x][y].getColor().getColorValue().equals(GREEN_BRIGHT)) {
             greenLeft -= 1;
         } else {
             whiteLeft -= 1;
