@@ -71,6 +71,7 @@ public class Game {
             while (!enemyMove(currentCoordinates).isEmpty()) {
                 nextCoordinates = getMove();
                 currentCoordinates = takePawn(enemyMove(nextCoordinates), currentCoordinates, nextCoordinates, selectedPawn);
+                crown(selectedPawn, nextCoordinates);
                 System.out.println(board);
                 if (enemyMove(nextCoordinates).isEmpty()) {
                     break;
@@ -81,6 +82,7 @@ public class Game {
             for (int i = 0; i < emptyMove.toArray().length; i++) {
                 if (emptyMove.get(i)[0] == nextCoordinates[0] && emptyMove.get(i)[1] == nextCoordinates[1]){
                     this.board.movePawn(selectedPawn, currentCoordinates, nextCoordinates);
+                    crown(selectedPawn, nextCoordinates);
                     break;
                 }
             }
@@ -169,5 +171,14 @@ public class Game {
             }
         }
         return moves;
+    }
+
+    private void crown(Pawn pawn, int[] coordinates){
+        if (pawn.getColor().getColorValue().equals(Board.GREEN_BRIGHT) && coordinates[0] == 0){
+            pawn.crown();
+        }
+        if (pawn.getColor().getColorValue().equals(Board.WHITE_BRIGHT) && coordinates[0] == board.getSize() - 1){
+            pawn.crown();
+        }
     }
 }

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    private static final String WHITE_BRIGHT = "\033[0;97m";  // WHITE
-    private static final String GREEN_BRIGHT = "\033[0;92m";  // GREEN
+    public static final String WHITE_BRIGHT = "\033[0;97m";  // WHITE
+    public static final String GREEN_BRIGHT = "\033[0;92m";  // GREEN
     public static final String RESET = "\033[0m";  // Text Reset
     Color color ;
 
@@ -34,6 +34,12 @@ public class Board {
                 }
                 else if (board[i][j] == null){
                     System.out.print(Color.ANSI_BLACK_BACKGROUND+"   "+RESET);
+                }
+                else if (board[i][j].getColor().getColorValue().equals(WHITE_BRIGHT) && board[i][j].isCrowned()){
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND+Color.ANSI_PURPLE+" X "+RESET);
+                }
+                else if (board[i][j].getColor().getColorValue().equals(GREEN_BRIGHT) && board[i][j].isCrowned()){
+                    System.out.print(Color.ANSI_BLACK_BACKGROUND+" X "+RESET);
                 }
                 else if (board[i][j].getColor().getColorValue().equals(WHITE_BRIGHT) ){
                     System.out.print(Color.ANSI_BLACK_BACKGROUND+Color.ANSI_PURPLE+" ● "+RESET);
@@ -102,7 +108,7 @@ public class Board {
 
     private void placePawns(){
         for(int y=0; y < size; y++){
-            for (int x=0; x< 4; x++){
+            for (int x=0; x< 1; x++){
                 if ((x+y)%2 ==0 ){
                     board[x][y] = createPawn(WHITE_BRIGHT, x, y);
                     board[size-x-1][size-y-1] = createPawn(GREEN_BRIGHT, size-x-1, size-y-1);
@@ -119,7 +125,7 @@ public class Board {
     }
 
     public String getEnemyColor(String color) {
-        if (color == WHITE_BRIGHT){
+        if (color.equals(WHITE_BRIGHT)){
             return GREEN_BRIGHT;
         } else {
             return WHITE_BRIGHT;
