@@ -65,15 +65,14 @@ public class Game {
     public void movePawn(){
         int[] currentCoordinates = startMove();
         int[] nextCoordinates;
-        List<Integer[]> enemyMove = enemyMove(currentCoordinates);
         List<Integer[]> emptyMove = emptyMove(currentCoordinates);
         Pawn selectedPawn = this.board.getPawn(currentCoordinates[0], currentCoordinates[1]);
-        if (!enemyMove.isEmpty()) {
-            nextCoordinates = getMove();
-            for (int i = 0; i < enemyMove.toArray().length; i++) {
-                if (enemyMove.get(i)[0] == nextCoordinates[0] && enemyMove.get(i)[1] == nextCoordinates[1]){
-                    this.board.movePawn(selectedPawn, currentCoordinates, nextCoordinates);
-                    board.removePawn((currentCoordinates[0]+nextCoordinates[0])/2, (currentCoordinates[1]+nextCoordinates[1])/2);
+        if (!enemyMove(currentCoordinates).isEmpty()) {
+            while (!enemyMove(currentCoordinates).isEmpty()) {
+                nextCoordinates = getMove();
+                currentCoordinates = takePawn(enemyMove(nextCoordinates), currentCoordinates, nextCoordinates, selectedPawn);
+                System.out.println(board);
+                if (enemyMove(nextCoordinates).isEmpty()) {
                     break;
                 }
             }
@@ -86,6 +85,12 @@ public class Game {
                 }
             }
         }
+    }
+
+    public int[] takePawn(List<Integer[]> moveList, int[] currentCoordinates, int[] nextCoordinates, Pawn selectedPawn) {
+        this.board.movePawn(selectedPawn, currentCoordinates, nextCoordinates);
+        board.removePawn((currentCoordinates[0]+nextCoordinates[0])/2, (currentCoordinates[1]+nextCoordinates[1])/2);
+        return nextCoordinates;
     }
 
     public boolean isEmptyPosition(int[] coordinates){
