@@ -11,9 +11,10 @@ public class Main {
         Board board = getBoardSize();
         Game game = new Game(board);
         System.out.println(board);
-        board.removePawn(0, 0);
-        game.movePawn();
-        System.out.println(board);
+        while(true) {
+            game.movePawn();
+            System.out.println(board);
+        }
     }
 
     public static Board getBoardSize() {
