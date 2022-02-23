@@ -1,5 +1,7 @@
 package com.codecool.polishdraughts;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Game {
@@ -43,7 +45,9 @@ public class Game {
             int[] coordinates = new int[2];
             coordinates[1] = Integer.parseInt(line.substring(1)) - 1;
             coordinates[0] = changeMark(line.charAt(0));
-            if((isCoordinatesInBoard(coordinates) && isFilledPosition(coordinates)) && emptyMove(coordinates)){
+            if(isCoordinatesInBoard(coordinates) && isFilledPosition(coordinates)){
+                emptyMove(coordinates);
+                enemyMove(coordinates);
                 return coordinates;
             }
         }
@@ -87,21 +91,56 @@ public class Game {
         return !Character.isDigit(coordinates.charAt(0));
     }
 
-    public boolean emptyMove(int[] coordinates){
+    public List<Integer[]> emptyMove(int[] coordinates){
+        List<Integer[]> moves = new ArrayList<>();
         int x = coordinates[0];
         int y = coordinates[1];
         if(x-1 >= 0 && y-1 >= 0 && this.board.getBoard()[x-1][y-1] == null){
-            return true;
+            moves.add(new Integer[]{x-1, y-1});
+            System.out.println((x-1) + "  " + (y-1));
         }
-        else if(x-1 >= 0 && y+1 <= this.board.getSize()-1 && this.board.getBoard()[x-1][y+1] == null){
-            return true;
+        if(x-1 >= 0 && y+1 <= this.board.getSize()-1 && this.board.getBoard()[x-1][y+1] == null){
+            moves.add(new Integer[]{x-1, y+1});
+            System.out.println((x-1) + "  " + (y+1));
         }
-        else if(x+1 <= this.board.getSize()-1 && y+1 <= this.board.getSize()-1 && this.board.getBoard()[x+1][y+1] == null){
-            return true;
+        if(x+1 <= this.board.getSize()-1 && y+1 <= this.board.getSize()-1 && this.board.getBoard()[x+1][y+1] == null){
+            moves.add(new Integer[]{x+1, y+1});
+            System.out.println((x+1) + "  " + (y+1));
         }
-        else if(x+1 <= this.board.getSize()-1 && y-1 >= 0 && this.board.getBoard()[x+1][y-1] == null){
-            return true;
+        if(x+1 <= this.board.getSize()-1 && y-1 >= 0 && this.board.getBoard()[x+1][y-1] == null){
+            moves.add(new Integer[]{x+1, y-1});
+            System.out.println((x+1) + "  " + (y-1));
         }
-        return false;
+        return moves;
+    }
+
+    public List<Integer[]> enemyMove(int[] coordinates){
+        List<Integer[]> moves = new ArrayList<>();
+        int x = coordinates[0];
+        int y = coordinates[1];
+        Pawn pawn = board.getPawn(coordinates[0], coordinates[1]);
+        String pawnColor = pawn.getColor().getColorValue();
+        String enemyColor = board.getEnemyColor(pawnColor);
+        if(x-1 >= 0 && y-1 >= 0 && this.board.getBoard()[x-1][y-1].getColor().getColorValue().equals(enemyColor) &&
+                x-2 >= 0 && y-2 >= 0 && this.board.getBoard()[x-2][y-2] == null){
+            moves.add(new Integer[]{x-1, y-1});
+            System.out.println((x-1) + "  " + (y-1));
+        }
+        if(x-1 >= 0 && y+1 <= this.board.getSize()-1 && this.board.getBoard()[x-1][y+1].getColor().getColorValue().equals(enemyColor) &&
+                x-2 >= 0 && y+2 <= this.board.getSize()-1 && this.board.getBoard()[x-2][y+2] == null){
+            moves.add(new Integer[]{x-1, y+1});
+            System.out.println((x-1) + "  " + (y+1));
+        }
+        if(x+1 <= this.board.getSize()-1 && y+1 <= this.board.getSize()-1 && this.board.getBoard()[x+1][y+1].getColor().getColorValue().equals(enemyColor) &&
+                x+2 <= this.board.getSize()-1 && y+2 <= this.board.getSize()-1 && this.board.getBoard()[x+2][y+2] == null){
+            moves.add(new Integer[]{x+1, y+1});
+            System.out.println((x+1) + "  " + (y+1));
+        }
+        if(x+1 <= this.board.getSize()-1 && y-1 >= 0 && this.board.getBoard()[x+1][y-1].getColor().getColorValue().equals(enemyColor) &&
+                x+2 <= this.board.getSize()-1 && y-2 >= 0 && this.board.getBoard()[x+2][y-2] == null){
+            moves.add(new Integer[]{x+1, y-1});
+            System.out.println((x+1) + "  " + (y-1));
+        }
+        return moves;
     }
 }
