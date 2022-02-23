@@ -2,6 +2,7 @@ package com.codecool.polishdraughts;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,6 +15,7 @@ public class Game {
 
     public int[] getMove() {
         while (true){
+            System.out.println(board);
             System.out.println("Enter coordinates: ");
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
@@ -34,6 +36,7 @@ public class Game {
 
     public int[] startMove() {
         while (true){
+            System.out.println(board);
             System.out.println("Enter coordinates chosen pawn: ");
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
@@ -71,9 +74,8 @@ public class Game {
             while (!enemyMove(currentCoordinates).isEmpty()) {
                 nextCoordinates = getMove();
                 currentCoordinates = takePawn(enemyMove(nextCoordinates), currentCoordinates, nextCoordinates, selectedPawn);
-                System.out.println(board);
                 if (enemyMove(nextCoordinates).isEmpty()) {
-                    break;
+                    break; // todo fix bug that causes a crash here, after taking a pawn you can't select an incorrect field i think
                 }
             }
         } else if (!emptyMove.isEmpty()) {
@@ -122,19 +124,19 @@ public class Game {
         int y = coordinates[1];
         if(x-1 >= 0 && y-1 >= 0 && this.board.getBoard()[x-1][y-1] == null){
             moves.add(new Integer[]{x-1, y-1});
-            System.out.println((x-1) + "  " + (y-1));
+//            System.out.println((x-1) + "  " + (y-1));
         }
         if(x-1 >= 0 && y+1 <= this.board.getSize()-1 && this.board.getBoard()[x-1][y+1] == null){
             moves.add(new Integer[]{x-1, y+1});
-            System.out.println((x-1) + "  " + (y+1));
+//            System.out.println((x-1) + "  " + (y+1));
         }
         if(x+1 <= this.board.getSize()-1 && y+1 <= this.board.getSize()-1 && this.board.getBoard()[x+1][y+1] == null){
             moves.add(new Integer[]{x+1, y+1});
-            System.out.println((x+1) + "  " + (y+1));
+//            System.out.println((x+1) + "  " + (y+1));
         }
         if(x+1 <= this.board.getSize()-1 && y-1 >= 0 && this.board.getBoard()[x+1][y-1] == null){
             moves.add(new Integer[]{x+1, y-1});
-            System.out.println((x+1) + "  " + (y-1));
+//            System.out.println((x+1) + "  " + (y-1));
         }
         return moves;
     }
@@ -150,22 +152,22 @@ public class Game {
             if (x - 1 >= 0 && y - 1 >= 0 && this.board.getBoard()[x - 1][y - 1] != null && this.board.getBoard()[x - 1][y - 1].getColor().getColorValue().equals(enemyColor) &&
                     x - 2 >= 0 && y - 2 >= 0 && this.board.getBoard()[x - 2][y - 2] == null) {
                 moves.add(new Integer[]{x - 2, y - 2});
-                System.out.println((x - 2) + "  " + (y - 2));
+//                System.out.println((x - 2) + "  " + (y - 2));
             }
             if (x - 1 >= 0 && y + 1 <= this.board.getSize() - 1 && this.board.getBoard()[x - 1][y + 1] != null && this.board.getBoard()[x - 1][y + 1].getColor().getColorValue().equals(enemyColor) &&
                     x - 2 >= 0 && y + 2 <= this.board.getSize() - 1 && this.board.getBoard()[x - 2][y + 2] == null) {
                 moves.add(new Integer[]{x - 2, y + 2});
-                System.out.println((x - 2) + "  " + (y + 2));
+//                System.out.println((x - 2) + "  " + (y + 2));
             }
             if (x + 1 <= this.board.getSize() - 1 && y + 1 <= this.board.getSize() - 1 && this.board.getBoard()[x + 1][y + 1] != null && this.board.getBoard()[x + 1][y + 1].getColor().getColorValue().equals(enemyColor) &&
                     x + 2 <= this.board.getSize() - 1 && y + 2 <= this.board.getSize() - 1 && this.board.getBoard()[x + 2][y + 2] == null) {
                 moves.add(new Integer[]{x + 2, y + 2});
-                System.out.println((x + 2) + "  " + (y + 2));
+//                System.out.println((x + 2) + "  " + (y + 2));
             }
             if (x + 1 <= this.board.getSize() - 1 && y - 1 >= 0 && this.board.getBoard()[x + 1][y - 1] != null && this.board.getBoard()[x + 1][y - 1].getColor().getColorValue().equals(enemyColor) &&
                     x + 2 <= this.board.getSize() - 1 && y - 2 >= 0 && this.board.getBoard()[x + 2][y - 2] == null) {
                 moves.add(new Integer[]{x + 2, y - 2});
-                System.out.println((x + 2) + "  " + (y - 2));
+//                System.out.println((x + 2) + "  " + (y - 2));
             }
         }
         return moves;
