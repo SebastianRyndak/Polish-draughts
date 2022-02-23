@@ -18,6 +18,10 @@ public class Pawn {
         return coordinates;
     }
 
+    public boolean isCrowned() {
+        return isCrowned;
+    }
+
     public void crown() {
         isCrowned = true;
     }

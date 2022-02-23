@@ -10,6 +10,7 @@ public class Main {
         PlayMusic.playMusic();
         Board board = getBoardSize();
         Game game = new Game(board);
+        System.out.println(board);
         while(true) {
             game.movePawn();
             if (board.checkWin()){
@@ -18,7 +19,6 @@ public class Main {
                 break;
             }
         }
-
     }
 
     public static Board getBoardSize() {
