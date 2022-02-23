@@ -1,12 +1,18 @@
 package com.codecool.polishdraughts;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
     private static final String WHITE_BRIGHT = "\033[0;97m";  // WHITE
     private static final String GREEN_BRIGHT = "\033[0;92m";  // GREEN
     public static final String RESET = "\033[0m";  // Text Reset
     Color color ;
 
+
+    private int greenLeft;
+    private int whiteLeft;
     private Pawn[][] board;
     private int size;
 
@@ -14,6 +20,7 @@ public class Board {
         this.board = new Pawn[size][size];
         this.size = size;
         placePawns();
+        setPawnCount(size*2);
     }
 
     @Override
@@ -40,6 +47,16 @@ public class Board {
         return "";
     }
 
+    public List<Integer> getPawnsLeft() {
+        List<Integer> pawnsLeft = new ArrayList<Integer>();
+        return pawnsLeft;
+    }
+
+    public void setPawnCount (int value) {
+        whiteLeft = value;
+        greenLeft = value;
+    }
+
     public void printFirstLine(int len){
         System.out.print("  ");
         for (int i = 0; i < len; i++){
@@ -54,6 +71,11 @@ public class Board {
     }
 
     public void removePawn(int x, int y){
+        if (board[x][y].getColor().getColorValue() == GREEN_BRIGHT) {
+            greenLeft -= 1;
+        } else {
+            whiteLeft -= 1;
+        }
         board[x][y] = null;
     }
 
