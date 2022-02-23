@@ -8,29 +8,31 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        PlayMusic.playMusic();
         gameMenu();
     }
 
-    public static boolean gameMenu() {
+    public static boolean gameMenu() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         Scanner scanner = new Scanner(System.in);
         boolean shouldContinue = true;
 
         while (shouldContinue) {
-            System.out.println(
-                    " _______ _                 _                     \n" +
-                    "(_______) |               | |                    \n" +
-                    " _      | |__  _____  ____| |  _ _____  ____ ___ \n" +
-                    "| |     |  _ \\| ___ |/ ___) |_/ ) ___ |/ ___)___)\n" +
-                    "| |_____| | | | ____( (___|  _ (| ____| |  |___ |\n" +
-                    " \\______)_| |_|_____)\\____)_| \\_)_____)_|  (___/ \n" +
-                    "                                                 ");
-            System.out.println("    Wybierz opcję   ");
+            System.out.println(Color.PURPLE_BRIGHT+
+                    "        _______ _                 _                     \n" +
+                    "       (_______) |               | |                    \n" +
+                    "        _      | |__  _____  ____| |  _ _____  ____ ___ \n" +
+                    "       | |     |  _ \\| ___ |/ ___) |_/ ) ___ |/ ___)___)\n" +
+                    "       | |_____| | | | ____( (___|  _ (| ____| |  |___ |\n" +
+                    "        \\______)_| |_|_____)\\____)_| \\_)_____)_|  (___/ \n" +
+                    "                                                 "+ Color.RESET);
+            PlayMusic.playMusic();
+            System.out.println(Color.WHITE_BRIGHT+"          ===============================");
+            System.out.println(Color.WHITE_BRIGHT+"          ||         Wybierz opcję     ||"+Color.RESET);
+            System.out.println(Color.WHITE_BRIGHT+"          ===============================");
             System.out.println();
-            System.out.println("1. Nowa Gra.");
-            System.out.println("2. Wyświetl Autorów Gry.");
-            System.out.println("3. Exit Game.");
-
+            System.out.println(Color.WHITE_BRIGHT+"            1. Nowa Gra.              "+Color.RESET);
+            System.out.println(Color.WHITE_BRIGHT+"            2. Wyświetl Autorów Gry. "+Color.RESET);
+            System.out.println(Color.WHITE_BRIGHT+"            3. Exit Game.            "+Color.RESET);
+            System.out.println(Color.WHITE_BRIGHT+"          ===============================");
             try {
                 int userChoice = scanner.nextInt();
                 switch (userChoice) {
