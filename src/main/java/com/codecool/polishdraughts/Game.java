@@ -47,8 +47,6 @@ public class Game {
             coordinates[1] = Integer.parseInt(line.substring(1)) - 1;
             coordinates[0] = changeMark(line.charAt(0));
             if(isCoordinatesInBoard(coordinates) && isFilledPosition(coordinates)){
-                emptyMove(coordinates);
-                enemyMove(coordinates);
                 return coordinates;
             }
         }
@@ -65,8 +63,15 @@ public class Game {
     public void movePawn(){
         int[] currentCoordinates = startMove();
         int[] nextCoordinates;
-        List<Integer[]> emptyMove = emptyMove(currentCoordinates);
+        List<Integer[]> emptyMove;
         Pawn selectedPawn = this.board.getPawn(currentCoordinates[0], currentCoordinates[1]);
+        if (selectedPawn.isCrowned()){
+            emptyMove = emptyMoveQueen(currentCoordinates);
+        }
+        else {
+            emptyMove = emptyMove(currentCoordinates);
+        }
+
         if (!enemyMove(currentCoordinates).isEmpty()) {
             while (!enemyMove(currentCoordinates).isEmpty()) {
                 nextCoordinates = getMove();
@@ -180,5 +185,44 @@ public class Game {
         if (pawn.getColor().getColorValue().equals(Board.WHITE_BRIGHT) && coordinates[0] == board.getSize() - 1){
             pawn.crown();
         }
+    }
+
+    public List<Integer[]> emptyMoveQueen(int[] coordinates){
+        List<Integer[]> moves = new ArrayList<>();
+        int x = coordinates[0];
+        int y = coordinates[1];
+
+        int add_x = 1;
+        int add_y = 1;
+        while (x-add_x >= 0 && y-add_y >= 0 && this.board.getBoard()[x-add_x][y-add_y] == null){
+            moves.add(new Integer[]{x-add_x, y-add_y});
+            add_x += 1;
+            add_y += 1;
+        }
+
+        add_x = 1;
+        add_y = 1;
+        while (x-add_x >= 0 && y+add_y <= this.board.getSize()-1 && this.board.getBoard()[x-add_x][y+add_y] == null){
+            moves.add(new Integer[]{x-add_x, y+add_y});
+            add_x += 1;
+            add_y += 1;
+        }
+
+        add_x = 1;
+        add_y = 1;
+        while (x+add_x <= this.board.getSize()-1 && y+add_y <= this.board.getSize()-1 && this.board.getBoard()[x+add_x][y+add_y] == null){
+            moves.add(new Integer[]{x+add_x, y+add_y});
+            add_x += 1;
+            add_y += 1;
+        }
+
+        add_x = 1;
+        add_y = 1;
+        while (x+add_x <= this.board.getSize()-1 && y-add_y >= 0 && this.board.getBoard()[x+add_x][y-add_y] == null){
+            moves.add(new Integer[]{x+add_x, y-add_y});
+            add_x += 1;
+            add_y += 1;
+        }
+        return moves;
     }
 }
