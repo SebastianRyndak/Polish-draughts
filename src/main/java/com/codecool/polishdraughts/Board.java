@@ -108,7 +108,7 @@ public class Board {
 
     private void placePawns(){
         for(int y=0; y < size; y++){
-            for (int x=0; x< 1; x++){
+            for (int x=0; x< 4; x++){
                 if ((x+y)%2 ==0 ){
                     board[x][y] = createPawn(WHITE_BRIGHT, x, y);
                     board[size-x-1][size-y-1] = createPawn(GREEN_BRIGHT, size-x-1, size-y-1);
