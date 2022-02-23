@@ -11,8 +11,8 @@ public class Board {
     Color color ;
 
 
-    private int greenLeft;
-    private int whiteLeft;
+    private int greenLeft = 0;
+    private int whiteLeft = 0;
     private Pawn[][] board;
     private int size;
 
@@ -20,7 +20,6 @@ public class Board {
         this.board = new Pawn[size][size];
         this.size = size;
         placePawns();
-        setPawnCount(size*2);
     }
 
     @Override
@@ -58,9 +57,9 @@ public class Board {
         return pawnsLeft;
     }
 
-    public void setPawnCount (int value) {
-        whiteLeft = value;
-        greenLeft = value;
+    public void addPawnCount (int value) {
+        whiteLeft += value;
+        greenLeft += value;
     }
 
     public void printFirstLine(int len){
@@ -106,17 +105,38 @@ public class Board {
         board[nextCoordinates[0]][nextCoordinates[1]] = pawn;
     }
 
+    public boolean checkWin(){
+        if (whiteLeft == 0 || greenLeft == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public void declareWin(){
+        String winner;
+        if (whiteLeft == 0) {
+            winner = "GREEN";
+        } else {
+            winner = "WHITE";
+        }
+        System.out.println("Player " + winner + " had won the game!");
+    }
+
     private void placePawns(){
+        int defaultRowsValue = 4;
+        if (size == 5) {
+            defaultRowsValue = 1;
+        }
         for(int y=0; y < size; y++){
-            for (int x=0; x< 4; x++){
+            for (int x=0; x< defaultRowsValue; x++){
                 if ((x+y)%2 ==0 ){
+                    addPawnCount(1);
                     board[x][y] = createPawn(WHITE_BRIGHT, x, y);
                     board[size-x-1][size-y-1] = createPawn(GREEN_BRIGHT, size-x-1, size-y-1);
                 }
             }
         }
     }
-
 
     private Pawn createPawn(String colorValue, int x, int y){
         Color color = new Color(colorValue);
