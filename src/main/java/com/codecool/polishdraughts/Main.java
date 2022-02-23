@@ -10,11 +10,9 @@ public class Main {
         PlayMusic.playMusic();
         Board board = getBoardSize();
         Game game = new Game(board);
-        System.out.println(board);
         while(true) {
-            game.movePawn();
+            game.move();
             if (board.checkWin()){
-                System.out.println(board);
                 board.declareWin();
                 break;
             }
