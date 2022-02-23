@@ -15,6 +15,8 @@ public class Board {
     private int whiteLeft = 0;
     private Pawn[][] board;
     private int size;
+    private int queenGreen = 0;
+    private int queenWhite = 0;
 
     public Board(int size) {
         this.board = new Pawn[size][size];
@@ -78,8 +80,14 @@ public class Board {
     public void removePawn(int x, int y){
         if (board[x][y].getColor().getColorValue().equals(GREEN_BRIGHT)) {
             greenLeft -= 1;
+            if (board[x][y].isCrowned()){
+                setQueenGreen(-1);
+            }
         } else {
             whiteLeft -= 1;
+            if (board[x][y].isCrowned()){
+                setQueenWhite(-1);
+            }
         }
         board[x][y] = null;
     }
@@ -105,6 +113,18 @@ public class Board {
         board[nextCoordinates[0]][nextCoordinates[1]] = pawn;
     }
 
+    public boolean checkDraw(){
+        if (queenGreen == 1 && queenWhite == 1 && whiteLeft == 1 && greenLeft == 1 ){
+            return true;
+        }
+        return false;
+    }
+
+    public void displayTheResultOfATie(){
+            System.out.println("A Draw!");
+            System.exit(0);
+    }
+
     public boolean checkWin(){
         if (whiteLeft == 0 || greenLeft == 0) {
             return true;
@@ -122,9 +142,25 @@ public class Board {
         System.out.println("Player " + winner + " had won the game!");
     }
 
+    public int getQueenGreen() {
+        return queenGreen;
+    }
+
+    public int getQueenWhite() {
+        return queenWhite;
+    }
+
+    public void setQueenGreen(int queenGreen) {
+        this.queenGreen += 1;
+    }
+
+    public void setQueenWhite(int queenWhite) {
+        this.queenWhite += 1;
+    }
+
     private void placePawns(){
         int defaultRowsValue = 4;
-        if (size == 5) {
+        if (size == 4) {
             defaultRowsValue = 1;
         }
         for(int y=0; y < size; y++){

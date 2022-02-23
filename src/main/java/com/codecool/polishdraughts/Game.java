@@ -159,6 +159,7 @@ public class Game {
         return this.board.getSize() > coordinates[0] && this.board.getSize() > coordinates[1];
     }
 
+
     public boolean isFormatCoordinates(String coordinates){
         String[] digits = coordinates.substring(1).split("");
         for (String digit: digits){
@@ -226,10 +227,12 @@ public class Game {
     }
 
     private void crown(Pawn pawn, int[] coordinates){
-        if (pawn.getColor().getColorValue().equals(Board.GREEN_BRIGHT) && coordinates[0] == 0){
+        if (pawn.getColor().getColorValue().equals(Board.GREEN_BRIGHT) && coordinates[0] == 0 && !pawn.isCrowned()){
+            board.setQueenGreen(1);
             pawn.crown();
         }
-        if (pawn.getColor().getColorValue().equals(Board.WHITE_BRIGHT) && coordinates[0] == board.getSize() - 1){
+        if (pawn.getColor().getColorValue().equals(Board.WHITE_BRIGHT) && coordinates[0] == board.getSize() - 1 && !pawn.isCrowned()){
+            board.setQueenWhite(1);
             pawn.crown();
         }
     }
@@ -333,4 +336,5 @@ public class Game {
         }
         return moves;
     }
+
 }
