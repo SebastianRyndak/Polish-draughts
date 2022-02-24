@@ -1,8 +1,5 @@
 package com.codecool.polishdraughts;
 
-import org.w3c.dom.ls.LSOutput;
-
-import java.sql.Array;
 import java.util.*;
 
 public class Game {
@@ -190,21 +187,25 @@ public class Game {
         List<Integer[]> moves = new ArrayList<>();
         int x = coordinates[0];
         int y = coordinates[1];
-        if(x-1 >= 0 && y-1 >= 0 && this.board.getBoard()[x-1][y-1] == null){
-            moves.add(new Integer[]{x-1, y-1});
-//            System.out.println((x-1) + "  " + (y-1));
+        Pawn pawn = board.getPawn(coordinates[0], coordinates[1]);
+        String selectedColor = pawn.getColor().getColorValue();
+
+        if (Objects.equals(selectedColor, Board.WHITE_BRIGHT)) {
+            if (x + 1 <= this.board.getSize() - 1 && y - 1 >= 0 && this.board.getBoard()[x + 1][y - 1] == null) {
+                moves.add(new Integer[]{x + 1, y - 1});
+            }
+            if (x + 1 <= this.board.getSize() - 1 && y + 1 <= this.board.getSize() - 1 && this.board.getBoard()[x + 1][y + 1] == null) {
+                moves.add(new Integer[]{x + 1, y + 1});
+            }
         }
-        if(x-1 >= 0 && y+1 <= this.board.getSize()-1 && this.board.getBoard()[x-1][y+1] == null){
-            moves.add(new Integer[]{x-1, y+1});
-//            System.out.println((x-1) + "  " + (y+1));
-        }
-        if(x+1 <= this.board.getSize()-1 && y+1 <= this.board.getSize()-1 && this.board.getBoard()[x+1][y+1] == null){
-            moves.add(new Integer[]{x+1, y+1});
-//            System.out.println((x+1) + "  " + (y+1));
-        }
-        if(x+1 <= this.board.getSize()-1 && y-1 >= 0 && this.board.getBoard()[x+1][y-1] == null){
-            moves.add(new Integer[]{x+1, y-1});
-//            System.out.println((x+1) + "  " + (y-1));
+
+        if (Objects.equals(selectedColor, Board.GREEN_BRIGHT)) {
+            if (x - 1 >= 0 && y - 1 >= 0 && this.board.getBoard()[x - 1][y - 1] == null) {
+                moves.add(new Integer[]{x - 1, y - 1});
+            }
+            if (x - 1 >= 0 && y + 1 <= this.board.getSize() - 1 && this.board.getBoard()[x - 1][y + 1] == null) {
+                moves.add(new Integer[]{x - 1, y + 1});
+            }
         }
         return moves;
     }
@@ -220,22 +221,18 @@ public class Game {
             if (x - 1 >= 0 && y - 1 >= 0 && this.board.getBoard()[x - 1][y - 1] != null && this.board.getBoard()[x - 1][y - 1].getColor().getColorValue().equals(enemyColor) &&
                     x - 2 >= 0 && y - 2 >= 0 && this.board.getBoard()[x - 2][y - 2] == null) {
                 moves.add(new Integer[]{x - 2, y - 2});
-//                System.out.println((x - 2) + "  " + (y - 2));
             }
             if (x - 1 >= 0 && y + 1 <= this.board.getSize() - 1 && this.board.getBoard()[x - 1][y + 1] != null && this.board.getBoard()[x - 1][y + 1].getColor().getColorValue().equals(enemyColor) &&
                     x - 2 >= 0 && y + 2 <= this.board.getSize() - 1 && this.board.getBoard()[x - 2][y + 2] == null) {
                 moves.add(new Integer[]{x - 2, y + 2});
-//                System.out.println((x - 2) + "  " + (y + 2));
             }
             if (x + 1 <= this.board.getSize() - 1 && y + 1 <= this.board.getSize() - 1 && this.board.getBoard()[x + 1][y + 1] != null && this.board.getBoard()[x + 1][y + 1].getColor().getColorValue().equals(enemyColor) &&
                     x + 2 <= this.board.getSize() - 1 && y + 2 <= this.board.getSize() - 1 && this.board.getBoard()[x + 2][y + 2] == null) {
                 moves.add(new Integer[]{x + 2, y + 2});
-//                System.out.println((x + 2) + "  " + (y + 2));
             }
             if (x + 1 <= this.board.getSize() - 1 && y - 1 >= 0 && this.board.getBoard()[x + 1][y - 1] != null && this.board.getBoard()[x + 1][y - 1].getColor().getColorValue().equals(enemyColor) &&
                     x + 2 <= this.board.getSize() - 1 && y - 2 >= 0 && this.board.getBoard()[x + 2][y - 2] == null) {
                 moves.add(new Integer[]{x + 2, y - 2});
-//                System.out.println((x + 2) + "  " + (y - 2));
             }
         }
         return moves;

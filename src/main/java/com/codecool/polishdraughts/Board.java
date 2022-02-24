@@ -8,7 +8,6 @@ public class Board {
     public static final String WHITE_BRIGHT = "\033[0;97m";  // WHITE
     public static final String GREEN_BRIGHT = "\033[0;92m";  // GREEN
     public static final String RESET = "\033[0m";  // Text Reset
-    Color color ;
 
 
     private int greenLeft = 0;
