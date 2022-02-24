@@ -92,6 +92,9 @@ public class Game {
 
         if (!enemyMove.isEmpty()) {
             while (!enemyMove.isEmpty()) {
+                if (board.checkWin()) {
+                    break;
+                }
                 nextCoordinates = getMove(enemyMove);
                 currentCoordinates = takePawn(currentCoordinates, nextCoordinates, selectedPawn);
                 crown(selectedPawn, nextCoordinates);
@@ -117,7 +120,7 @@ public class Game {
 
         if (!enemyMoveQueen.isEmpty()) {
             while (!enemyMoveQueen.isEmpty()) {
-                if (board.checkDraw()){
+                if (board.checkDraw() || board.checkWin()){
                     break;
                 }
                 nextCoordinates = getMove(enemyMoveQueen);

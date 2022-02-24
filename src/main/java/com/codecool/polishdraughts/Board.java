@@ -120,9 +120,7 @@ public class Board {
     }
 
     public void displayTheResultOfATie(){
-            System.out.println(board);
             System.out.println("A Draw!");
-            System.exit(0);
     }
 
     public boolean checkWin(){
@@ -173,8 +171,8 @@ public class Board {
             board[5][5] = createPawn(GREEN_BRIGHT, 5, 5);
             board[2][4] = createPawn(WHITE_BRIGHT, 2, 4);
             board[1][1] = createPawn(WHITE_BRIGHT, 1, 1);
-            setGreenLeft(2);
-            setWhiteLeft(1);
+            setGreenLeft(1);
+            setWhiteLeft(2);
         } else {
             for (int y = 0; y < size; y++) {
                 for (int x = 0; x < defaultRowsValue; x++) {
