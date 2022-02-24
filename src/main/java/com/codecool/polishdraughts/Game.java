@@ -34,7 +34,7 @@ public class Game {
         }
     }
 
-    public int[] startMove() {
+    public int[] startMove(boolean currentPlayer) {
         while (true){
             System.out.println(board);
             System.out.println("Enter coordinates chosen pawn: ");
@@ -63,8 +63,8 @@ public class Game {
         return acs - 97;
     }
 
-    public void move(){
-        int[] currentCoordinates = startMove();
+    public void move(boolean currentPlayer){
+        int[] currentCoordinates = startMove(currentPlayer);
         Pawn selectedPawn = this.board.getPawn(currentCoordinates[0], currentCoordinates[1]);
         if (selectedPawn.isCrowned()){
             moveQueen(currentCoordinates, selectedPawn);

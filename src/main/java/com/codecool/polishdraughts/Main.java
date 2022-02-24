@@ -69,8 +69,9 @@ public class Main {
     public static void startGame(){
         Board board = getBoardSize();
         Game game = new Game(board);
+        boolean currentPlayer = false;
         while(true) {
-            game.move();
+            game.move(currentPlayer);
             if (board.checkWin()){
                 board.declareWin();
                 break;
@@ -78,6 +79,7 @@ public class Main {
                 board.displayTheResultOfATie();
                 break;
             }
+            currentPlayer = !currentPlayer;
         }
     }
 
