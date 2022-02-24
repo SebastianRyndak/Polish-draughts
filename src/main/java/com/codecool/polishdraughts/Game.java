@@ -1,10 +1,9 @@
 package com.codecool.polishdraughts;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Game {
     private Board board;
@@ -43,6 +42,11 @@ public class Game {
     public int[] startMove(boolean currentPlayer) {
         while (true){
             System.out.println(board);
+            if (currentPlayer) {
+                System.out.println("Turn for player WHITE");
+            } else {
+                System.out.println("Turn for player PURPLE");
+            }
             System.out.println("Enter coordinates chosen pawn: ");
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
@@ -55,8 +59,14 @@ public class Game {
             int[] coordinates = new int[2];
             coordinates[1] = Integer.parseInt(line.substring(1)) - 1;
             coordinates[0] = changeMark(line.charAt(0));
-            if(isCoordinatesInBoard(coordinates) && isFilledPosition(coordinates)){
-                return coordinates;
+            if(isCoordinatesInBoard(coordinates) && isFilledPosition(coordinates)) {
+                Pawn selectedPawn = this.board.getPawn(coordinates[0], coordinates[1]);
+                if ((!currentPlayer && Objects.equals(selectedPawn.getColor().getColorValue(), Board.WHITE_BRIGHT))
+                        || (currentPlayer && Objects.equals(selectedPawn.getColor().getColorValue(), Board.GREEN_BRIGHT))) {
+                    return coordinates;
+                } else {
+                    System.out.println("Incorrect pawn");
+                }
             }
         }
     }

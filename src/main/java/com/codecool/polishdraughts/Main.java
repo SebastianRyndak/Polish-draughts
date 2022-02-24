@@ -65,7 +65,7 @@ public class Main {
             if (line.matches("1[0-9]|20")) {
                 return Integer.parseInt(line);
             } else if (line.matches("secrettest")) {
-                return 4;
+                return 5;
             }
         }
     }
@@ -73,7 +73,7 @@ public class Main {
     public static void startGame(){
         Board board = getBoardSize();
         Game game = new Game(board);
-        boolean currentPlayer = false;
+        boolean currentPlayer = true;
         while(true) {
             game.move(currentPlayer);
             if (board.checkWin()){
