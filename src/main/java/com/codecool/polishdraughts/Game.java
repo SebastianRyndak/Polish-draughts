@@ -124,6 +124,7 @@ public class Game {
                 nextCoordinates = getMove(enemyMoveQueen);
                 currentCoordinates = takePawnQueen(currentCoordinates, nextCoordinates, selectedPawn);
                 System.out.println(board);
+                enemyMoveQueen = enemyMoveQueen(nextCoordinates);
             }
         } else if (!emptyMoveQueen.isEmpty()) {
             nextCoordinates = getMove(emptyMoveQueen);
@@ -346,7 +347,6 @@ public class Game {
                 add_y += 1;
             }
         }
-        System.out.println(moves);
         return moves;
     }
 
