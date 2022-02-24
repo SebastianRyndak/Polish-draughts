@@ -1,10 +1,9 @@
 package com.codecool.polishdraughts;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Game {
     private Board board;
@@ -31,7 +30,6 @@ public class Game {
 
             for (Integer[]move:  moves){
                 if (move[0] == coordinates[0] && move[1] == coordinates[1]) {
-                    System.out.println("test");
                     if (isCoordinatesInBoard(coordinates) && isEmptyPosition(coordinates)) {
                         return coordinates;
                     }
@@ -40,9 +38,14 @@ public class Game {
         }
     }
 
-    public int[] startMove() {
+    public int[] startMove(boolean currentPlayer) {
         while (true){
             System.out.println(board);
+            if (currentPlayer) {
+                System.out.println("Turn for player WHITE");
+            } else {
+                System.out.println("Turn for player PURPLE");
+            }
             System.out.println("Enter coordinates chosen pawn: ");
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
@@ -55,8 +58,14 @@ public class Game {
             int[] coordinates = new int[2];
             coordinates[1] = Integer.parseInt(line.substring(1)) - 1;
             coordinates[0] = changeMark(line.charAt(0));
-            if(isCoordinatesInBoard(coordinates) && isFilledPosition(coordinates)){
-                return coordinates;
+            if(isCoordinatesInBoard(coordinates) && isFilledPosition(coordinates)) {
+                Pawn selectedPawn = this.board.getPawn(coordinates[0], coordinates[1]);
+                if ((!currentPlayer && Objects.equals(selectedPawn.getColor().getColorValue(), Board.WHITE_BRIGHT))
+                        || (currentPlayer && Objects.equals(selectedPawn.getColor().getColorValue(), Board.GREEN_BRIGHT))) {
+                    return coordinates;
+                } else {
+                    System.out.println("Incorrect pawn");
+                }
             }
         }
     }
@@ -69,8 +78,8 @@ public class Game {
         return acs - 97;
     }
 
-    public void move(){
-        int[] currentCoordinates = startMove();
+    public void move(boolean currentPlayer){
+        int[] currentCoordinates = startMove(currentPlayer);
         Pawn selectedPawn = this.board.getPawn(currentCoordinates[0], currentCoordinates[1]);
         if (selectedPawn.isCrowned()){
             moveQueen(currentCoordinates, selectedPawn);
@@ -92,9 +101,6 @@ public class Game {
                 crown(selectedPawn, nextCoordinates);
                 System.out.println(board);
                 enemyMove = enemyMove(nextCoordinates);
-               // if (enemyMove.isEmpty()) {
-                //    break; // todo fix bug that causes a crash here, after taking a pawn you can't select an incorrect field i think
-              //  }
             }
         } else if (!emptyMove.isEmpty()) {
             nextCoordinates = getMove(emptyMove);
@@ -115,12 +121,12 @@ public class Game {
 
         if (!enemyMoveQueen.isEmpty()) {
             while (!enemyMoveQueen.isEmpty()) {
+                if (board.checkDraw()){
+                    break;
+                }
                 nextCoordinates = getMove(enemyMoveQueen);
                 currentCoordinates = takePawnQueen(currentCoordinates, nextCoordinates, selectedPawn);
                 System.out.println(board);
-//                if (enemyMoveQueen(nextCoordinates).isEmpty()) {
-//                    break;
-//                }
             }
         } else if (!emptyMoveQueen.isEmpty()) {
             nextCoordinates = getMove(emptyMoveQueen);
@@ -343,6 +349,7 @@ public class Game {
                 add_y += 1;
             }
         }
+        System.out.println(moves);
         return moves;
     }
 

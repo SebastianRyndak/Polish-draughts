@@ -121,6 +121,7 @@ public class Board {
     }
 
     public void displayTheResultOfATie(){
+            System.out.println(board);
             System.out.println("A Draw!");
             System.exit(0);
     }
@@ -160,7 +161,7 @@ public class Board {
 
     private void placePawns(){
         int defaultRowsValue = 4;
-        if (size == 4) {
+        if (size < 10) {
             defaultRowsValue = 1;
         }
         for(int y=0; y < size; y++){
