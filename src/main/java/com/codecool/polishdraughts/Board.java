@@ -158,17 +158,31 @@ public class Board {
         this.queenWhite += 1;
     }
 
+    public void setGreenLeft(int greenLeft) {
+        this.greenLeft = greenLeft;
+    }
+
+    public void setWhiteLeft(int whiteLeft) {
+        this.whiteLeft = whiteLeft;
+    }
+
     private void placePawns(){
         int defaultRowsValue = 4;
         if (size < 10) {
             defaultRowsValue = 1;
-        }
-        for(int y=0; y < size; y++){
-            for (int x=0; x< defaultRowsValue; x++){
-                if ((x+y)%2 ==0 ){
-                    addPawnCount(1);
-                    board[x][y] = createPawn(WHITE_BRIGHT, x, y);
-                    board[size-x-1][size-y-1] = createPawn(GREEN_BRIGHT, size-x-1, size-y-1);
+            board[5][5] = createPawn(GREEN_BRIGHT, 5, 5);
+            board[2][4] = createPawn(WHITE_BRIGHT, 2, 4);
+            board[1][1] = createPawn(WHITE_BRIGHT, 1, 1);
+            setGreenLeft(2);
+            setWhiteLeft(1);
+        } else {
+            for (int y = 0; y < size; y++) {
+                for (int x = 0; x < defaultRowsValue; x++) {
+                    if ((x + y) % 2 == 0) {
+                        addPawnCount(1);
+                        board[x][y] = createPawn(WHITE_BRIGHT, x, y);
+                        board[size - x - 1][size - y - 1] = createPawn(GREEN_BRIGHT, size - x - 1, size - y - 1);
+                    }
                 }
             }
         }

@@ -65,7 +65,7 @@ public class Main {
             if (line.matches("1[0-9]|20")) {
                 return Integer.parseInt(line);
             } else if (line.matches("secrettest")) {
-                return 5;
+                return 6;
             }
         }
     }

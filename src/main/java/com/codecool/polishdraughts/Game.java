@@ -11,7 +11,6 @@ public class Game {
 
     public int[] getMove(List<Integer[]> moves) {
         while (true){
-            System.out.println(board);
             System.out.println("Enter coordinates: ");
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
