@@ -14,7 +14,7 @@ public class Main {
     public static boolean gameMenu() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         Scanner scanner = new Scanner(System.in);
         boolean shouldContinue = true;
-
+        PlayMusic.playMusic();
         while (shouldContinue) {
             System.out.println(Color.PURPLE_BRIGHT+
                     "        _______ _                 _                     \n" +
@@ -24,25 +24,29 @@ public class Main {
                     "       | |_____| | | | ____( (___|  _ (| ____| |  |___ |\n" +
                     "        \\______)_| |_|_____)\\____)_| \\_)_____)_|  (___/ \n" +
                     "                                                 "+ Color.RESET);
-            PlayMusic.playMusic();
-            System.out.println(Color.WHITE_BRIGHT+"          ===============================");
-            System.out.println(Color.WHITE_BRIGHT+"          ||         Wybierz opcję     ||"+Color.RESET);
-            System.out.println(Color.WHITE_BRIGHT+"          ===============================");
+
+            System.out.println(Color.WHITE_BRIGHT+"               ===============================");
+            System.out.println(Color.WHITE_BRIGHT+"               ||         Game Menu         ||"+Color.RESET);
+            System.out.println(Color.WHITE_BRIGHT+"               ===============================");
             System.out.println();
-            System.out.println(Color.WHITE_BRIGHT+"            1. Nowa Gra.              "+Color.RESET);
-            System.out.println(Color.WHITE_BRIGHT+"            2. Wyświetl Autorów Gry. "+Color.RESET);
-            System.out.println(Color.WHITE_BRIGHT+"            3. Exit Game.            "+Color.RESET);
-            System.out.println(Color.WHITE_BRIGHT+"          ===============================");
+            System.out.println(Color.WHITE_BRIGHT+"                 1. New Game.              "+Color.RESET);
+            System.out.println(Color.WHITE_BRIGHT+"                 2. Game Developers.      "+Color.RESET);
+            System.out.println(Color.WHITE_BRIGHT+"                 3. Exit Game.            "+Color.RESET);
+            System.out.println();
+            System.out.println(Color.WHITE_BRIGHT+"               ==============================="+Color.RESET);
             try {
                 int userChoice = scanner.nextInt();
                 switch (userChoice) {
                     case 1 -> startGame();
-                    case 2 -> System.out.println("2");
+                    case 2 -> gameDevelopers();
                     case 3 -> shouldContinue = false;
+
                 }
             } catch (InputMismatchException a) {
-                System.out.println("Proszę podać poprawny parametr !!!");
+                System.out.println("Please specify the correct parameter!");
                 return true;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
         return false;
@@ -55,7 +59,7 @@ public class Main {
 
     public static int validateBoardSize() {
         while (true) {
-            System.out.println("Enter board size (10-20):");
+            System.out.println(Color.WHITE_BRIGHT+"               Enter board size (10-20):"+Color.RESET);
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
             if (line.matches("1[0-9]|20")) {
@@ -84,5 +88,9 @@ public class Main {
     }
 
 
+    public static void gameDevelopers() throws InterruptedException {
+        System.out.println("Many thanks for a great cooperation to Justyna, Krzysztof, Sebastian. Great Job !!!");
+        Thread.sleep(5000);
+    }
 
 }

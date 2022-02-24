@@ -13,7 +13,7 @@ public class Game {
         this.board = board;
     }
 
-    public int[] getMove() {
+    public int[] getMove(List<Integer[]> moves) {
         while (true){
             System.out.println(board);
             System.out.println("Enter coordinates: ");
@@ -28,8 +28,14 @@ public class Game {
             int[] coordinates = new int[2];
             coordinates[1] = Integer.parseInt(line.substring(1)) - 1;
             coordinates[0] = changeMark(line.charAt(0));
-            if(isCoordinatesInBoard(coordinates) && isEmptyPosition(coordinates)){
-                return coordinates;
+
+            for (Integer[]move:  moves){
+                if (move[0] == coordinates[0] && move[1] == coordinates[1]) {
+                    System.out.println("test");
+                    if (isCoordinatesInBoard(coordinates) && isEmptyPosition(coordinates)) {
+                        return coordinates;
+                    }
+                }
             }
         }
     }
@@ -77,19 +83,21 @@ public class Game {
     public void movePawn(int[] currentCoordinates, Pawn selectedPawn){
         int[] nextCoordinates;
         List<Integer[]> emptyMove = emptyMove(currentCoordinates);
+        List<Integer[]> enemyMove = enemyMove(currentCoordinates);
 
-        if (!enemyMove(currentCoordinates).isEmpty()) {
-            while (!enemyMove(currentCoordinates).isEmpty()) {
-                nextCoordinates = getMove();
+        if (!enemyMove.isEmpty()) {
+            while (!enemyMove.isEmpty()) {
+                nextCoordinates = getMove(enemyMove);
                 currentCoordinates = takePawn(currentCoordinates, nextCoordinates, selectedPawn);
                 crown(selectedPawn, nextCoordinates);
                 System.out.println(board);
-                if (enemyMove(nextCoordinates).isEmpty()) {
-                    break; // todo fix bug that causes a crash here, after taking a pawn you can't select an incorrect field i think
-                }
+                enemyMove = enemyMove(nextCoordinates);
+               // if (enemyMove.isEmpty()) {
+                //    break; // todo fix bug that causes a crash here, after taking a pawn you can't select an incorrect field i think
+              //  }
             }
         } else if (!emptyMove.isEmpty()) {
-            nextCoordinates = getMove();
+            nextCoordinates = getMove(emptyMove);
             for (int i = 0; i < emptyMove.toArray().length; i++) {
                 if (emptyMove.get(i)[0] == nextCoordinates[0] && emptyMove.get(i)[1] == nextCoordinates[1]){
                     this.board.movePawn(selectedPawn, currentCoordinates, nextCoordinates);
@@ -102,21 +110,22 @@ public class Game {
 
     public void moveQueen(int[] currentCoordinates, Pawn selectedPawn){
         int[] nextCoordinates;
-        List<Integer[]> emptyMove = emptyMoveQueen(currentCoordinates);
+        List<Integer[]> emptyMoveQueen = emptyMoveQueen(currentCoordinates);
+        List<Integer[]> enemyMoveQueen = enemyMoveQueen(currentCoordinates);
 
-        if (!enemyMoveQueen(currentCoordinates).isEmpty()) {
-            while (!enemyMoveQueen(currentCoordinates).isEmpty()) {
-                nextCoordinates = getMove();
+        if (!enemyMoveQueen.isEmpty()) {
+            while (!enemyMoveQueen.isEmpty()) {
+                nextCoordinates = getMove(enemyMoveQueen);
                 currentCoordinates = takePawnQueen(currentCoordinates, nextCoordinates, selectedPawn);
                 System.out.println(board);
-                if (enemyMoveQueen(nextCoordinates).isEmpty()) {
-                    break;
-                }
+//                if (enemyMoveQueen(nextCoordinates).isEmpty()) {
+//                    break;
+//                }
             }
-        } else if (!emptyMove.isEmpty()) {
-            nextCoordinates = getMove();
-            for (int i = 0; i < emptyMove.toArray().length; i++) {
-                if (emptyMove.get(i)[0] == nextCoordinates[0] && emptyMove.get(i)[1] == nextCoordinates[1]){
+        } else if (!emptyMoveQueen.isEmpty()) {
+            nextCoordinates = getMove(emptyMoveQueen);
+            for (int i = 0; i < emptyMoveQueen.toArray().length; i++) {
+                if (emptyMoveQueen.get(i)[0] == nextCoordinates[0] && emptyMoveQueen.get(i)[1] == nextCoordinates[1]){
                     this.board.movePawn(selectedPawn, currentCoordinates, nextCoordinates);
                     break;
                 }
