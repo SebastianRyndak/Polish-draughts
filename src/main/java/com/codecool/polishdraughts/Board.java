@@ -176,8 +176,7 @@ public class Board {
 
     private Pawn createPawn(String colorValue, int x, int y){
         Color color = new Color(colorValue);
-        Coordinates coordinates = new Coordinates(x, y);
-        return new Pawn(color, coordinates);
+        return new Pawn(color);
     }
 
     public String getEnemyColor(String color) {
