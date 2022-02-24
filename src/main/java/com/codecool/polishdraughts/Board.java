@@ -121,6 +121,7 @@ public class Board {
     }
 
     public void displayTheResultOfATie(){
+            System.out.println(board);
             System.out.println("A Draw!");
             System.exit(0);
     }

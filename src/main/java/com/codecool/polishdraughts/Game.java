@@ -30,7 +30,6 @@ public class Game {
 
             for (Integer[]move:  moves){
                 if (move[0] == coordinates[0] && move[1] == coordinates[1]) {
-                    System.out.println("test");
                     if (isCoordinatesInBoard(coordinates) && isEmptyPosition(coordinates)) {
                         return coordinates;
                     }
@@ -102,9 +101,6 @@ public class Game {
                 crown(selectedPawn, nextCoordinates);
                 System.out.println(board);
                 enemyMove = enemyMove(nextCoordinates);
-               // if (enemyMove.isEmpty()) {
-                //    break; // todo fix bug that causes a crash here, after taking a pawn you can't select an incorrect field i think
-              //  }
             }
         } else if (!emptyMove.isEmpty()) {
             nextCoordinates = getMove(emptyMove);
@@ -125,12 +121,12 @@ public class Game {
 
         if (!enemyMoveQueen.isEmpty()) {
             while (!enemyMoveQueen.isEmpty()) {
+                if (board.checkDraw()){
+                    break;
+                }
                 nextCoordinates = getMove(enemyMoveQueen);
                 currentCoordinates = takePawnQueen(currentCoordinates, nextCoordinates, selectedPawn);
                 System.out.println(board);
-//                if (enemyMoveQueen(nextCoordinates).isEmpty()) {
-//                    break;
-//                }
             }
         } else if (!emptyMoveQueen.isEmpty()) {
             nextCoordinates = getMove(emptyMoveQueen);
@@ -353,6 +349,7 @@ public class Game {
                 add_y += 1;
             }
         }
+        System.out.println(moves);
         return moves;
     }
 
