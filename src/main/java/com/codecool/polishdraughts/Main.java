@@ -8,10 +8,11 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        gameMenu();
+        Main main = new Main();
+        main.gameMenu();
     }
 
-    public static boolean gameMenu() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public boolean gameMenu() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         Scanner scanner = new Scanner(System.in);
         boolean shouldContinue = true;
         PlayMusic.playMusic();
@@ -52,12 +53,12 @@ public class Main {
         return false;
     }
 
-    public static Board getBoardSize() {
+    public Board getBoardSize() {
         int size = validateBoardSize();
         return new Board(size);
     }
 
-    public static int validateBoardSize() {
+    public int validateBoardSize() {
         while (true) {
             System.out.println(Color.WHITE_BRIGHT+"               Enter board size (10-20):"+Color.RESET);
             Scanner scanner = new Scanner(System.in);
@@ -70,7 +71,7 @@ public class Main {
         }
     }
 
-    public static void startGame(){
+    public void startGame(){
         Board board = getBoardSize();
         Game game = new Game(board);
         boolean currentPlayer = true;
@@ -88,7 +89,7 @@ public class Main {
     }
 
 
-    public static void gameDevelopers() throws InterruptedException {
+    public void gameDevelopers() throws InterruptedException {
         System.out.println("Many thanks for a great cooperation to Justyna, Krzysztof, Sebastian. Great Job !!!");
         Thread.sleep(5000);
     }

@@ -103,9 +103,6 @@ public class Board {
         return size;
     }
 
-    public void validateMove(){
-        // walidacja czy można przesunąć pionek na dane miejsce
-    }
 
     public void movePawn(Pawn pawn, int[] currentCoordinates, int[] nextCoordinates){
         board[currentCoordinates[0]][currentCoordinates[1]] = null;
